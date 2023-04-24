@@ -12,7 +12,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const ips = ['127.0.0.1'];
+const ips = ['::ffff:127.0.0.1'];
 
 const app = express();
 app.use(cors());
