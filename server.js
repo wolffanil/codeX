@@ -1,6 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
+import { IpFilter } from 'express-ipfilter';
 import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
@@ -11,9 +12,12 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+const ips = [process.env.IP_LAPTOP];
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(IpFilter(ips, { mode: 'allow'}))
 
 app.get('/', async (req, res) => {
     res.status(200).send({
@@ -29,7 +33,7 @@ app.post('/', async (req, res) => {
             model: "text-davinci-003",
             prompt: `${prompt}`,
             temperature: 0,
-            max_tokens: 10000,
+            max_tokens: 3000,
             top_p: 1,
             frequency_penalty: 0.5,
             presence_penalty: 0,
