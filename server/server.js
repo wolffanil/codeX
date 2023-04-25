@@ -2,6 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import { IpFilter } from 'express-ipfilter';
+import  ip  from 'ip'
 import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
@@ -18,6 +19,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(IpFilter(ips, { mode: 'allow'}))
+console.log(ip.address());
 
 app.get('/', async (req, res) => {
     res.status(200).send({
