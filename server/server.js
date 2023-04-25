@@ -1,8 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import { IpFilter } from 'express-ipfilter';
-import os from 'os';
 import { Configuration, OpenAIApi } from 'openai';
 
 
@@ -14,16 +12,14 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-const ips = ['::ffff:127.0.0.1', '192.168.1.0/24'];
-const ip = os.networkInterfaces().eth0[0].address;
-console.log(ip);
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(IpFilter(ips, { mode: 'allow'}))
 
 app.get('/', async (req, res) => {
+    const deviceId = req.headers['x-device-id'];
+    console.log(deviceId);
     res.status(200).send({
         message: 'hello from Codex'
     })
