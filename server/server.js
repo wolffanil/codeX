@@ -22,7 +22,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(IpFilter(ips, { mode: 'allow'}))
-console.log(ip.address());
 
 app.get('/', async (req, res) => {
     res.status(200).send({
