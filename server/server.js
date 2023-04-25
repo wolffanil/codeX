@@ -28,10 +28,11 @@ app.use((req, res, next) => {
     console.log(deviceId);
     next();
   })
-  
+
 app.get('/', async (req, res) => {
-    const deviceId = req.headers['x-device-id'];
-    console.log(deviceId);
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(ip);
+
     res.status(200).send({
         message: 'hello from Codex'
     })
