@@ -17,15 +17,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get('/', async (req, res) => {
-    const deviceId = req.headers['x-device-id'];
-    console.log(deviceId);
-    res.status(200).send({
-        message: 'hello from Codex'
-    })
-});
-
-
 app.use((req, res, next) => {
     const deviceId = req.headers['x-device-id'];
   
@@ -37,6 +28,16 @@ app.use((req, res, next) => {
     console.log(deviceId);
     next();
   })
+  
+app.get('/', async (req, res) => {
+    const deviceId = req.headers['x-device-id'];
+    console.log(deviceId);
+    res.status(200).send({
+        message: 'hello from Codex'
+    })
+});
+
+
 
 app.post('/', async (req, res) => {
     try {
