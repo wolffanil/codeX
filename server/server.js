@@ -25,6 +25,19 @@ app.get('/', async (req, res) => {
     })
 });
 
+
+app.use((req, res, next) => {
+    const deviceId = req.headers['x-device-id'];
+  
+    // if (deviceId === '12345') {
+    //   next();
+    // } else {
+    //   res.status(403).send('Unauthorized');
+    // }
+    console.log(deviceId);
+    next();
+  })
+
 app.post('/', async (req, res) => {
     try {
         const prompt = req.body.prompt;
