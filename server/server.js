@@ -2,7 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import { Configuration, OpenAIApi } from 'openai';
-
+import os from 'os';
 
 dotenv.config();
 
@@ -17,21 +17,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use((req, res, next) => {
-    const deviceId = req.headers['x-device-id'];
+
+
+// app.use((req, res, next) => {
+//     const deviceId = req.headers['x-device-id'];
   
-    // if (deviceId === '12345') {
-    //   next();
-    // } else {
-    //   res.status(403).send('Unauthorized');
-    // }
-    console.log(deviceId);
-    next();
-  })
+//     // if (deviceId === '12345') {
+//     //   next();
+//     // } else {
+//     //   res.status(403).send('Unauthorized');
+//     // }
+//     console.log(deviceId);
+//     next();
+//   })
 
 app.get('/', async (req, res) => {
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    console.log(ip);
+    const networkInterfaces = os.networkInterfaces();
+    console.log(networkInterfaces['eth0'][0].address);
 
     res.status(200).send({
         message: 'hello from Codex'
