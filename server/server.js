@@ -2,7 +2,7 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import { Configuration, OpenAIApi } from 'openai';
-import os from 'os';
+import DeviceDetector from "node-device-detector";
 
 dotenv.config();
 
@@ -17,23 +17,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const userAgent = 'Mozilla/5.0 (Linux; Android 5.0; NX505J Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36';
+const result = detector.detect(userAgent);
 
-
-// app.use((req, res, next) => {
-//     const deviceId = req.headers['x-device-id'];
-  
-//     // if (deviceId === '12345') {
-//     //   next();
-//     // } else {
-//     //   res.status(403).send('Unauthorized');
-//     // }
-//     console.log(deviceId);
-//     next();
-//   })
+app.use((req, res, next) => {
+    const dev = result.device.model
+    // if (deviceId === '12345') {
+    //   next();
+    // } else {
+    //   res.status(403).send('Unauthorized');
+    // }
+    console.log(dev);
+    // Z7 Max
+    next();
+  })
 
 app.get('/', async (req, res) => {
-    const networkInterfaces = os.networkInterfaces();
-    console.log(networkInterfaces['eth0'][0].address);
 
     res.status(200).send({
         message: 'hello from Codex'
