@@ -26,7 +26,7 @@ const userAgent = 'Mozilla/5.0 (Linux; Android 5.0; NX505J Build/KVT49L) AppleWe
 const result = detector.detect(userAgent);
 
 app.use((req, res, next) => {
-    const dev = result.device.model
+    const dev = result
     // if (deviceId === '12345') {
     //   next();
     // } else {
